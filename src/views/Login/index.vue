@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="logo">
-      HITOSEA
+      <TailscaleIcon />
     </div>
     <NForm
         class="w-[20rem]"
@@ -19,7 +19,15 @@
         />
       </NFormItem>
       <NFormItem class="mt-[0.65rem]">
-        <NButton class="w-full" type="primary" @click="login">Sign in</NButton>
+        <NButton
+          class="w-full bg-[var(--gray7)] hover:bg-[var(--gray8)] text-white"
+          color="#474645"
+          text-color="#FFFFFF"
+          strong
+          @click="login"
+        >
+            Sign in
+        </NButton>
       </NFormItem>
     </NForm>
     <div class="divider">
@@ -31,6 +39,7 @@
         class="button-sso button-logo max-w-[20rem]"
         size="large"
         type="default"
+        strong
         @click="ssoLoginFuncMap.get(button.name)"
     >
       <img :src="button.icon" class="button-logo-icon" :alt="button.name"/>
@@ -58,6 +67,10 @@ import {reactive} from 'vue'
 import googleIcon from '@/assets/images/login/google.svg'
 import githubIcon from '@/assets/images/login/github.svg'
 import microsoftIcon from '@/assets/images/login/microsoft.svg'
+import TailscaleIcon from '@/components/TailscaleIcon.vue'
+import {useRouter} from 'vue-router'
+
+const router = useRouter()
 
 const form = reactive({
   username: '',
@@ -65,6 +78,7 @@ const form = reactive({
 
 const login = () => {
   console.log(form)
+  router.push('/users')
 }
 
 const ssoLoginFuncMap = new Map([
@@ -94,7 +108,7 @@ const ssoButtons = [
 
 <style lang="scss" scoped>
 main {
-  @apply w-full;
+  @apply w-screen flex flex-col items-center pt-[2rem] pb-[1rem] text-center min-h-full my-0 mx-auto;
 
   footer {
     letter-spacing: -0.01em;
@@ -110,7 +124,16 @@ main {
 }
 
 .login-form-input {
+  @apply bg-[var(--gray0)];
+  font-size: 1rem;
+  --n-border-hover: transparent !important;
+  --n-border-focus: 2px solid rgb(38, 71, 194) !important;
+  --n-box-shadow-focus: none !important;
 
+  :deep(input) {
+    line-height: 1.5rem;
+    letter-spacing: 0;
+  }
 }
 
 .button-sso {
@@ -120,7 +143,8 @@ main {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   /*color: #242424;*/
   color: var(--gray9);
-  border: 1px solid #d8d6d4;
+  border: 0;
+  outline: none;
   transition: border-color 200ms ease, box-shadow 200ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -129,10 +153,16 @@ main {
   font-size: 0.875rem;
   font-weight: 400;
   width: 100%;
+  //--n-border-hover: #a9a8a6 !important;
+
+  .n-base-wave {
+    --n-border: 1px solid #d8d6d4 !important;
+  }
 }
 
 .button-sso:hover {
   border-color: #a9a8a6;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  color: var(--gray9);
 }
 </style>

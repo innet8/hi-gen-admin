@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^9.13.0",
     "pinia": "^2.0.34",
     "unplugin-auto-import": "0.15.2",
     "unplugin-vue-components": "0.24.1",

@@ -9,12 +9,31 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    GlobalHeader: typeof import('./src/components/GlobalHeader.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     NButton: typeof import('naive-ui')['NButton']
+    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
+    NDataTable: typeof import('naive-ui')['NDataTable']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
+    NGi: typeof import('naive-ui')['NGi']
+    NGrid: typeof import('naive-ui')['NGrid']
+    NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
+    NInputGroup: typeof import('naive-ui')['NInputGroup']
+    NMenu: typeof import('naive-ui')['NMenu']
+    NPopselect: typeof import('naive-ui')['NPopselect']
+    NSelect: typeof import('naive-ui')['NSelect']
+    NSwitch: typeof import('naive-ui')['NSwitch']
+    NTab: typeof import('naive-ui')['NTab']
+    NTabs: typeof import('naive-ui')['NTabs']
+    NTag: typeof import('naive-ui')['NTag']
+    PageHeader: typeof import('./src/components/PageHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SettingsIcon: typeof import('./src/components/SettingsIcon.vue')['default']
+    TailscaleIcon: typeof import('./src/components/TailscaleIcon.vue')['default']
+    UsersHeader: typeof import('./src/components/UsersHeader.vue')['default']
   }
 }
