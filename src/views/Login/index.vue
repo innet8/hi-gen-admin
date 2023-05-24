@@ -104,14 +104,29 @@ const form = reactive({
   isVerifyPass: false,
 })
 
+const array=[
+          ['admin','933ff374c43d831a'],
+          ['user','123456789'],
+          ['mali','987654321']
+        ]
+
 const login = () => {
-  if (form.userName=='admin' && form.password=='933ff374c43d831a') {
-    router.push('/users')
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    for (let indexs = 0; indexs < element.length; indexs++) {
+      const elements = element[indexs];
+      if (form.userName==element[0] && form.password==element[1]) {
+        router.push('/users')
+      }
+      else{
+        console.log(form.userName)
+        console.log(form.password)
+      }
+      console.log(elements)
+      break
+    }
   }
-  else{
-    console.log(form.userName)
-    console.log(form.password)
-  }
+
 }
 
 
