@@ -1,7 +1,8 @@
 <template>
   <main>
-    <div class="logo">
-      <TailscaleIcon />
+    <div class="logo flex items-center">
+      <TailscaleIcon size="small"/>
+      <div role="banner" data-testid="banner" class="text-lg font-semibold ml-2 truncate">Sdwan</div>
     </div>
     <NForm
         class="w-[20rem]"
@@ -9,15 +10,31 @@
         size="large"
         :show-feedback="false"
     >
+
+
+
+
+
+
+    <NFormItem class="mb-3">
+      <n-space vertical class="w-[500px]">
+        <n-input v-model:value="form.userName" type="text" placeholder="账号" />
+      </n-space>
+    </NFormItem>
+
       <NFormItem>
-        <NInput
-            class="login-form-input"
-            autofocus
-            v-model="form.username"
-            :input-props="{ autocomplete: 'email', type: 'email' }"
-            placeholder="Enter your email..."
-        />
+        <n-space vertical class="w-[500px]">
+          <n-input v-model:value="form.password" type="text" placeholder="密码" />
+        </n-space>
       </NFormItem>
+
+
+
+
+
+
+
+
       <NFormItem class="mt-[0.65rem]">
         <NButton
           class="w-full bg-[var(--gray7)] hover:bg-[var(--gray8)] text-white"
@@ -29,6 +46,12 @@
             Sign in
         </NButton>
       </NFormItem>
+
+
+
+
+
+
     </NForm>
     <div class="divider">
       or
@@ -69,17 +92,29 @@ import githubIcon from '@/assets/images/login/github.svg'
 import microsoftIcon from '@/assets/images/login/microsoft.svg'
 import TailscaleIcon from '@/components/TailscaleIcon.vue'
 import {useRouter} from 'vue-router'
+import { fromJSON } from 'postcss'
+import { NDialog,NInput,NFormItem } from 'naive-ui'
+
 
 const router = useRouter()
 
 const form = reactive({
-  username: '',
+  userName: '',
+  password: '',
+  isVerifyPass: false,
 })
 
 const login = () => {
-  console.log(form)
-  router.push('/users')
+  if (form.userName=='admin' && form.password=='933ff374c43d831a') {
+    router.push('/users')
+  }
+  else{
+    console.log(form.userName)
+    console.log(form.password)
+  }
 }
+
+
 
 const ssoLoginFuncMap = new Map([
   ['google', login],
@@ -93,16 +128,7 @@ const ssoButtons = [
     icon: googleIcon,
     label: 'Sign in with Google',
   },
-  {
-    name: 'microsoft',
-    icon: microsoftIcon,
-    label: 'Sign in with Microsoft',
-  },
-  {
-    name: 'github',
-    icon: githubIcon,
-    label: 'Sign in with GitHub',
-  },
+
 ]
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <PageHeader title="Users" title-class="mb-2">
+    <PageHeader title="Node" title-class="mb-2">
       <p class="text-gray-600 text-left">
         Manage the users in your network and their permissions.
         <a
@@ -52,6 +52,8 @@
         <DownloadIcon />
       </NButton>
     </div>
+
+    
     <div class="tags">
       <n-tag round :bordered="false" class="font-medium">
         1 user
@@ -63,30 +65,54 @@
         :data="data"
         :pagination="false as const"
         :bordered="false"
-/>
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { NButton } from 'naive-ui'
-import SearchIcon from '@/views/Users/components/SearchIcon.vue'
-import DownloadIcon from '@/views/Users/components/DownloadIcon.vue'
-import DropdownIcon from '@/views/Users/components/DropdownIcon.vue'
+import SearchIcon from '@/views/Node/components/SearchIcon.vue'
+import DownloadIcon from '@/views/Node/components/DownloadIcon.vue'
+import DropdownIcon from '@/views/Node/components/DropdownIcon.vue'
 
 import PageHeader from '@/components/PageHeader.vue'
-import createColumns, {User} from '@/views/Users/UsersTableColumns'
+import createColumns, {User} from '@/views/Node/UsersTableColumns'
 
 
 const data: User[] = [
     {
         avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
-        nickname: 'Daniel Morrison',
-        account: 'DanielSimgame@github',
-        role: '123456789',
-        createAt: '123456789',
-        lastLoginAt: '123456789'
-    }
+        nickname: 'demo-node',
+        account: '',
+        role: 'Online',
+        createAt: '126.220.41.255',
+        lastLoginAt: '1360'
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
+      nickname: 'demo-node',
+      account: '',
+      role: 'Online',
+      createAt: '126.220.41.255',
+      lastLoginAt: '1360'
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
+    nickname: 'demo-node',
+    account: '',
+    role: 'Online',
+    createAt: '126.220.41.255',
+    lastLoginAt: '1360'
+},
+{
+  avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
+  nickname: 'demo-node',
+  account: '',
+  role: 'Online',
+  createAt: '126.220.41.255',
+  lastLoginAt: '1360'
+},
 ]
 
 const columns = createColumns({

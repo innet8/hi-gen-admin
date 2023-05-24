@@ -1,6 +1,9 @@
-import {DataTableColumns, NButton,NDropdown,NTag} from "naive-ui";
+import {DataTableColumns, NButton,NDropdown,NTag,NIcon} from "naive-ui";
 import {h} from "vue";
-import UserInfoItem from "@/views/Users/components/UserInfoItem.vue";
+import UserInfoItem from "@/views/Node/components/UserInfoItem.vue";
+import '@fortawesome/fontawesome-free/css/all.css'
+
+
 
 
 export type User = {
@@ -31,16 +34,16 @@ export default function createColumns ({callback}: { callback: (row: User) => vo
         {
             title: 'Role',
             key: 'role',
-            // render (row) {
-            //     return h(
-            //         NTag,
-            //         {
-            //             size: 'small',
-            //             type: "primary"
-            //         },
-            //         { default: () => 'Online' }
-            //     )
-            // }
+            render (row) {
+                return h(
+                    NTag,
+                    {
+                        size: 'small',
+                        type: "primary"
+                    },
+                    { default: () => 'Online' }
+                )
+            }
         },
         {
             title: 'node',
@@ -61,7 +64,7 @@ export default function createColumns ({callback}: { callback: (row: User) => vo
                 NDropdown, {
                   size: 'small',
                   trigger: 'hover',
-                //   type: "red",
+                  showArrow:true,
                   options: [
                     { label: 'Web terminal', key: 'option-1' },
                     { label: 'Command record', key: 'option-2' },
@@ -71,10 +74,15 @@ export default function createColumns ({callback}: { callback: (row: User) => vo
                     { label: 'Deployment log', key: 'option-6' },
                     { label: 'Delete', key: 'option-7' },
                     { label: 'Detail', key: 'option-8' },
+                    {
+                        label: 'Web terminal',
+                        key: 'option-9',
+                        icon: () => h(NIcon, null, { default: () => h('i', { class: 'fa-solid fa-code' }) })
+                    }
                   ],
-
+  
                 }, {
-                  default: () => '...'
+                    default: '...'
                 }
                 )
               }

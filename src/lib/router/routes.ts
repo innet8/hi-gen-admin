@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 import Login from '@/views/Login/index.vue'
 const Users = () => import('@/views/Users/index.vue')
+const Node = () => import('@/views/Node/index.vue')
 const Settings = () => import('@/views/Settings/index.vue')
 const SettingsGeneral = () => import('@/views/Settings/children/General.vue')
 const SettingsUserManage = () => import('@/views/Settings/children/UserManagement.vue')
@@ -21,6 +22,13 @@ export const routes: RouteRecordRaw[] = [
     {
         path: '/users',
         component: Users,
+        meta: {
+            useLayout: true,
+        }
+    },
+    {
+        path: '/Node',
+        component: Node,
         meta: {
             useLayout: true,
         }
