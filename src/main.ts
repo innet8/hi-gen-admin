@@ -3,6 +3,9 @@ import './style.css'
 import App from './App.vue'
 import { createPinia } from 'pinia'
 import { setupRouter } from '@/lib/router'
+import microApp from '@micro-zoe/micro-app'
+
+microApp.start()
 
 const app = createApp(App)
 

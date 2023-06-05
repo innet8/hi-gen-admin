@@ -1,6 +1,6 @@
 <template>
   <section>
-    <PageHeader title="Node" title-class="mb-2">
+    <PageHeader title="Network" title-class="mb-2">
       <p class="text-gray-600 text-left">
         Manage the users in your network and their permissions.
         <a
@@ -14,8 +14,6 @@
         </a>
       </p>
     </PageHeader>
-
-
     <div class="search flex gap-[1rem]">
       <NInput size="large" class="text-left" placeholder="Search users...">
         <template #prefix>
@@ -61,8 +59,8 @@
         1 user
       </n-tag>
     </div>
-    <div class="table">
-      <n-data-table
+    <div class="table container whitespace-nowrap overflow-hidden text-overflow-ellipsis">
+      <n-data-table 
         :columns="columns"
         :data="element"
         :pagination="false as const"
@@ -72,19 +70,15 @@
   </section>
 </template>
 
-
 <script setup lang="ts">
 import { NButton } from 'naive-ui'
-import SearchIcon from '@/views/Node/components/SearchIcon.vue'
-import DownloadIcon from '@/views/Node/components/DownloadIcon.vue'
-import DropdownIcon from '@/views/Node/components/DropdownIcon.vue'
+import SearchIcon from '@/views/Network/components/SearchIcon.vue'
+import DownloadIcon from '@/views/Network/components/DownloadIcon.vue'
+import DropdownIcon from '@/views/Network/components/DropdownIcon.vue'
 import axios from 'axios'
 import { ref,computed, watch } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
-import createColumns, {User} from '@/views/Node/UsersTableColumns'
-import MyDialog from '@/views/Node/UsersTableColumns.ts';
-
-
+import createColumns, {User} from '@/views/Network/UsersTableColumns'
 
 
 //获取数据
@@ -98,7 +92,7 @@ const instance = axios.create({
 
 const element=ref()
 
-instance.get('/api/admin/nodes?user_id=300').then(response => {
+instance.get('/api/admin/devices?network_id=1726&pagesize=100').then(response => {
   element.value = (response.data.data.data)
   console.log(element.value)
 })

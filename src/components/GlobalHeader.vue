@@ -57,6 +57,7 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 import UsersIcons from '@/views/Node/components/UsersIcon.vue'
+import UsersIconss from '@/views/Network/components/UsersIcon.vue'
 import UsersIcon from '@/views/Users/components/UsersIcon.vue'
 import SettingsIcon from '@/components/SettingsIcon.vue'
 import TailscaleIcon from '@/components/TailscaleIcon.vue'
@@ -91,6 +92,11 @@ const navTabs = [
   {
     name: 'Node',
     path: '/Node',
+    icon: UsersIconss as Component
+  },
+  {
+    name: 'Network',
+    path: '/Network',
     icon: UsersIcons as Component
   },
 ]

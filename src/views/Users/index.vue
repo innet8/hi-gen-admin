@@ -78,6 +78,15 @@ import PageHeader from '@/components/PageHeader.vue'
 import createColumns, {User} from '@/views/Users/UsersTableColumns'
 
 
+const aa=    {
+  avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
+  nickname: 'Daniel Morrison',
+  account: 'DanielSimgame@github',
+  role: '123456789',
+  createAt: '123456789',
+  lastLoginAt: '123456789'
+}
+
 const data: User[] = [
     {
         avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
@@ -86,8 +95,19 @@ const data: User[] = [
         role: '123456789',
         createAt: '123456789',
         lastLoginAt: '123456789'
-    }
+    },
+    {
+      avatar: 'https://avatars.githubusercontent.com/u/15177071?v=4',
+      nickname: 'Daniel Morrison',
+      account: 'DanielSimgame@github',
+      role: '123456789',
+      createAt: '123456789',
+      lastLoginAt: '123456789'
+  }
 ]
+
+data.push(aa)
+console.log(data)
 
 const columns = createColumns({
     callback (row: User) {

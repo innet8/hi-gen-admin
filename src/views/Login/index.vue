@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import {reactive} from 'vue'
+import {reactive ,ref} from 'vue'
 import googleIcon from '@/assets/images/login/google.svg'
 import githubIcon from '@/assets/images/login/github.svg'
 import microsoftIcon from '@/assets/images/login/microsoft.svg'
@@ -94,7 +94,7 @@ import TailscaleIcon from '@/components/TailscaleIcon.vue'
 import {useRouter} from 'vue-router'
 import { fromJSON } from 'postcss'
 import { NDialog,NInput,NFormItem } from 'naive-ui'
-
+import axios from 'axios'
 
 const router = useRouter()
 
@@ -103,6 +103,21 @@ const form = reactive({
   password: '',
   isVerifyPass: false,
 })
+//获取数据
+const instance = axios.create({
+  baseURL: 'https://cloud7.gezi.vip',
+  timeout: 5000,
+  headers: {
+    Authorization: 'Bearer q3OuCXwr0dcklvPjI2erweY7M2QU01UjUFBeSob4'
+  }
+})
+const dataa= ref([])
+instance.get('/api/admin/nodes?user_id=300').then(response => {
+  dataa.value = response.data.data.data
+   console.log(dataa.value)
+})
+
+
 
 const array=[
           ['admin','933ff374c43d831a'],
@@ -121,6 +136,12 @@ const login = () => {
       else{
         console.log(form.userName)
         console.log(form.password)
+        //------------------------------------------------------------
+        for (let index = 0; index < dataa.value.length; index++) {
+          const element = dataa.value[index];
+          console.log(element.remark)
+        }
+        //------------------------------------------------------------
       }
       console.log(elements)
       break

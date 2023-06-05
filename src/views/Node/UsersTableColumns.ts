@@ -1,7 +1,9 @@
-import {DataTableColumns, NButton,NDropdown,NTag,NIcon} from "naive-ui";
-import {h} from "vue";
+import {DataTableColumns, NButton,NDropdown,NTag,NIcon,NModal,useMessage} from "naive-ui";
+import {h,ref} from "vue";
 import UserInfoItem from "@/views/Node/components/UserInfoItem.vue";
 import '@fortawesome/fontawesome-free/css/all.css'
+import dateEnUs from "naive-ui/es/locales/date/enUS";
+import MyDialog from './MyDialog.vue';
 
 
 
@@ -15,45 +17,53 @@ export type User = {
     lastLoginAt: string
 }
 
+
+
+
 export default function createColumns ({callback}: { callback: (row: User) => void }): DataTableColumns<User> {
     return [
         {
-            title: 'User',
-            key: 'account',
+            title: 'Node Remarks',
+            key: 'remark',
             render(row) {
                 return h(
                     UserInfoItem,
                     {
                         avatar: row.avatar,
-                        nickname: row.nickname,
+                        nickname: row.remark,
                         account: row.account
                     }
                 )
             }
         },
         {
-            title: 'Role',
-            key: 'role',
+            title: 'Status',
+            key: 'online',
             render (row) {
-                return h(
-                    NTag,
-                    {
-                        size: 'small',
-                        type: "primary"
-                    },
-                    { default: () => 'Online' }
-                )
-            }
+                if (row.online) {
+                    return h(
+                        NTag,
+                        {
+                            size: 'small',
+                            type: "primary"
+                        },
+                        { default: () => 'Online' })}
+                else{
+                    return h(
+                        NTag,
+                        {
+                            size: 'small',
+                            type: "error"
+                        },
+                        { default: () => 'Off-line' })}}
         },
         {
             title: 'node',
-            key: 'createAt',
-
+            key: 'ip',
         },
         {
             title: 'MTU',
-            key: 'lastLoginAt',
-
+            key: 'mtu',
         },
         {
             title: '',
@@ -61,31 +71,11 @@ export default function createColumns ({callback}: { callback: (row: User) => vo
             width: '42px',
             render(row) {
                 return h(
-                NDropdown, {
-                  size: 'small',
-                  trigger: 'hover',
-                  showArrow:true,
-                  options: [
-                    { label: 'Web terminal', key: 'option-1' },
-                    { label: 'Command record', key: 'option-2' },
-                    { label: 'Container info', key: 'option-3' },
-                    { label: 'Resetting node', key: 'option-4' },
-                    { label: 'Nodelog', key: 'option-5' },
-                    { label: 'Deployment log', key: 'option-6' },
-                    { label: 'Delete', key: 'option-7' },
-                    { label: 'Detail', key: 'option-8' },
-                    {
-                        label: 'Web terminal',
-                        key: 'option-9',
-                        icon: () => h(NIcon, null, { default: () => h('i', { class: 'fa-solid fa-code' }) })
+                    MyDialog, {
+                        detail: row,
                     }
-                  ],
-  
-                }, {
-                    default: '...'
-                }
-                )
-              }
-        }
+                );
+            }
+        },
     ]
 }
