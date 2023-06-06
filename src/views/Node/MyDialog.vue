@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center relative">
-
+    <!-- 扩展图标 -->
     <n-dropdown trigger="hover" :options="options" @select='handleSelect' >
       <n-button :bordered=false>
         <n-icon>
@@ -8,7 +8,7 @@
         </n-icon>
       </n-button>
     </n-dropdown>
-
+    <!-- 下拉框内容 -->
     <div v-if="numbe==='0'">
       <n-modal v-model:show="showModal" >
         <n-card
@@ -104,6 +104,76 @@
         </n-card>
       </n-modal>
     </div>
+    <div v-else-if="numbe==='1'">
+
+      <n-modal v-model:show="showModal" >
+        <n-config-provider :theme="theme">
+          <n-card>
+            <n-space>
+        <n-card
+          style="width: 1000px; height:1000px"
+          title="Web Terminal"
+          :bordered="false"
+          size="huge"
+          role="dialog"
+          aria-modal="true"
+        >
+
+
+
+
+
+          <n-space vertical >
+            <n-layout>
+              <n-layout has-sider>
+                <n-layout-sider
+                  bordered
+                  show-trigger
+                  collapse-mode="width"
+                  :collapsed-width="12"
+                  :width="240"
+                  :native-scrollbar="false"
+                  
+                >
+                  <n-menu
+                    :collapsed-width="64"
+                    :collapsed-icon-size="22"
+                    :options="menuOptions"
+                    class="h-[840px]"
+                    @select="handleMenuSelect"
+                  />
+                </n-layout-sider>
+
+                <div v-if="index">
+                  <iframe :src="elements"
+                  frameborder="0" 
+                  class="h-[840px] w-[950px]">
+                  </iframe>
+                </div>
+
+                <n-layout  />
+              </n-layout>
+            </n-layout>
+          </n-space>
+
+
+
+
+
+          <template #footer>
+            <div class="flex justify-end">
+              <NButton type="tertiary" class="px-3 text-[#647398] w-[70px] ml-3" @click="countdown">
+                Cancel
+              </NButton>
+            </div>
+          </template>
+        </n-card>
+      </n-space>
+    </n-card>
+  </n-config-provider>
+      </n-modal>
+
+    </div>
     <div v-else-if="numbe==='5'">
       <n-modal v-model:show="showModal" >
         <n-card
@@ -148,7 +218,7 @@
     <div v-else-if="numbe==='6'">
       <n-modal v-model:show="showModal" >
         <n-card
-          style="width: 750px"
+          style="width: 1000px; height:1000px"
           
           :bordered="false"
           size="huge"
@@ -159,9 +229,8 @@
           <p class="font-bold text-[25px]">{{detail.remark}}</p>
           <p class="font-bold text-[#647398] my-3">Node IP:{{detail.ip}}</p>
           <n-divider />
-          <div v-if="element.content!=''">
-            
-          </div>
+
+          <n-scrollbar style="max-height: 750px" >
           <n-table>
             <thead>
               <tr>
@@ -174,6 +243,8 @@
               </tr>
             </tbody>
           </n-table>
+        </n-scrollbar>
+
           <template #footer>
             <div class="flex justify-end">
               <NButton type="tertiary" class="px-3 text-[#647398] w-[70px]" @click="countdown">
@@ -257,12 +328,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref,onMounted, watch } from 'vue'
-import {DataTableColumns, NButton,NDropdown,NTag,NIcon,NModal,useMessage,FormRules} from "naive-ui";
+import { ref } from 'vue'
+import {NButton,NDropdown,NIcon,NModal} from "naive-ui";
 import axios from 'axios';
-import { h, defineComponent } from 'vue'
+import { darkTheme } from 'naive-ui'
+import type { GlobalTheme } from 'naive-ui'
 
 
+//1的框中内容（以下）
+const menuOptions = [
+  {
+    label: 'Device',
+    key: 'pinball-1973',
+    children: [
+      {
+        label: 'AX9000',
+        key: 'rat',
+      }
+    ]
+  },
+  {
+    label: 'node',
+    key: 'dance-dance-dance',
+    children: [
+      {
+        label: props.detail.remark,
+        key: "kkb",
+      }
+    ]
+  }
+]
+//1的框中内容（以上）
+
+let index =  ref(false)
+
+const theme = ref<GlobalTheme | null>(darkTheme)
 
 const props =  defineProps({
   detail: {
@@ -305,7 +405,7 @@ const handleDrawerSubmit = () => {
     showModal.value = false;
 };
 
-//获取数据
+//获取数据(日志)
 const instance = axios.create({
   baseURL: 'https://cloud7.gezi.vip',
   timeout: 5000,
@@ -313,20 +413,63 @@ const instance = axios.create({
     Authorization: 'Bearer cCFcCNBqA76D6MRigqlSWtU0dccn1ziXXBwITeEm'
   }
 })
-
 const element=ref()
-
 instance.get(`/api/admin/nodes/${props.detail.id}/log-list?user_id=300&pagesize=1000`).then(response => {
   element.value = (response.data.data.data)
-  console.log('element.value')
-  console.log(element.value[0].content)
-  console.log('element.value')
 })
+
+//获取数据（终端）
+const instances = axios.create({
+  baseURL: 'https://cloud7.gezi.vip',
+  timeout: 5000,
+  headers: {
+    Authorization: 'Bearer cCFcCNBqA76D6MRigqlSWtU0dccn1ziXXBwITeEm'
+  }
+})
+const elements=ref()
+instances.get(`/api/admin/nodes/${props.detail.id}/webssh?id=${props.detail.id}&container_id=0&_t=1686018060887`).then(response => {
+  elements.value = (response.data.data.url)
+})
+
+//获取数据（device）
+const devices = axios.create({
+  baseURL: 'https://cloud7.gezi.vip',
+  timeout: 5000,
+  headers: {
+    Authorization: 'Bearer cCFcCNBqA76D6MRigqlSWtU0dccn1ziXXBwITeEm'
+  }
+})
+const device=ref()
+devices.get(`/api/admin/devices/6278/ssh-open?_t=1686020546553`).then(response => {
+  device.value = (response.data.data.url)
+  console.log("--------------")
+  console.log(device)
+  console.log("device")
+}) 
+
+//获取数据（获取的原始元素）
+const elem=ref()
+
+devices.get('/api/admin/nodes?user_id=300').then(response => {
+  elem.value = (response.data.data.data)
+  console.log("-------------")
+  console.log(elem.value[0])
+  console.log("原始")
+})
+function handleMenuSelect(key: string) {
+  if (key === 'kkb') {
+    index.value=true
+  }
+}
+
 </script>
+
+
 
 <style lang="scss" scoped>
 .nickname {
   @apply font-semibold hover:text-blue-500 no-underline;
 }
+
 </style>
 
